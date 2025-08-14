@@ -9,11 +9,8 @@ RUN apt-get update && \
     apt-get install -y wget curl sudo lsb-release gnupg2 software-properties-common nginx iproute2 && \
     apt-get clean
 
-# Install X-UI
-RUN wget -O x-ui.sh https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh && \
-    chmod +x x-ui.sh && \
-    ./x-ui.sh install && \
-    rm x-ui.sh
+# Install X-UI from working repository
+RUN bash -c "$(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)"
 
 # Remove default Nginx site
 RUN rm /etc/nginx/sites-enabled/default
