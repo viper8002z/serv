@@ -1,27 +1,17 @@
-# Base image
-FROM ubuntu:24.04
+FROM alpine:latest
 
-ENV DEBIAN_FRONTEND=noninteractive
-ENV XUI_PORT=54321
+# Install wstunnel
+RUN apk add --no-cache wget tar && \
+    wget https://github.com/erebe/wstunnel/releases/download/v10.4.4/wstunnel_10.4.4_linux_amd64.tar.gz && \
+    tar -xvzf wstunnel_10.4.4_linux_amd64.tar.gz && \
+    mv wstunnel /usr/local/bin/wstunnel && \
+    chmod +x /usr/local/bin/wstunnel && \
+    rm -rf /var/cache/apk/* wstunnel_10.4.4_linux_amd64.tar.gz
 
-# Install dependencies
-RUN apt-get update && \
-    apt-get install -y wget curl sudo lsb-release gnupg2 software-properties-common nginx iproute2 && \
-    apt-get clean
+# Render sets PORT environment variable
+ENV PORT=10000
 
-# Remove default Nginx site
-RUN rm /etc/nginx/sites-enabled/default
+EXPOSE 10000
 
-# Copy Nginx config
-COPY nginx/xui.conf /etc/nginx/sites-available/xui.conf
-RUN ln -s /etc/nginx/sites-available/xui.conf /etc/nginx/sites-enabled/xui.conf
-
-# Copy start script
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
-# Expose port 80
-EXPOSE 80
-
-# Start services
-CMD ["/start.sh"]
+# Start wstunnel server
+CMD ["sh", "-c", "wstunnel --server ws://0.0.0.0:$PORT"]
