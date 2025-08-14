@@ -1,7 +1,4 @@
 #!/bin/bash
-
-# Start X-UI in foreground
-x-ui start --no-daemon &
-
-# Start Nginx in foreground
+/usr/local/x-ui/x-ui &
+sleep 3
 nginx -g "daemon off;"
