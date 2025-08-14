@@ -10,7 +10,7 @@ RUN apt-get update && \
     apt-get clean
 
 # Install X-UI from working repository
-RUN bash -c "$(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)"
+RUN bash <(curl -Ls https://raw.githubusercontent.com/alireza0/x-ui/master/install.sh)
 
 # Remove default Nginx site
 RUN rm /etc/nginx/sites-enabled/default
