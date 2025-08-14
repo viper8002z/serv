@@ -14,4 +14,4 @@ ENV PORT=10000
 EXPOSE 10000
 
 # Start wstunnel server
-CMD ["sh", "-c", "wstunnel --server ws://0.0.0.0:$PORT"]
+CMD ["sh", "-c", "wstunnel server ws://0.0.0.0:$PORT"]
