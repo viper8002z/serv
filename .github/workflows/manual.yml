@@ -29,4 +29,4 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: curl web.telegram.org > output.txt
+      run: curl https://testtt.runflare.run/
